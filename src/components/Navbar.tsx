@@ -1,0 +1,46 @@
+"use client";
+import { useState, useEffect } from 'react'
+import type { FC } from 'react'
+import Link from 'next/link'
+import { NavItem } from '@/types'
+import Image from 'next/image';
+const items: NavItem[] = [
+  { label: 'Publisher', to: '/publisher' },
+  { label: 'Partnership', to: '/partnership' },
+]
+
+const Navbar: FC = () => {
+  const [hasBg, setHasBg] = useState(false)
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setHasBg(window.scrollY > 50)
+    }
+    window.addEventListener('scroll', handleScroll)
+    return () => window.removeEventListener('scroll', handleScroll)
+  }, [])
+
+  return (
+    <div
+      className={`fixed top-0 left-0 right-0 z-10 transition-colors duration-300 ${
+        hasBg ? 'bg-dark-blue-500' : 'bg-transparent'
+      }`}
+    >
+      <div className="container mx-auto py-3 flex justify-between items-center">
+        <Link href="/">
+          <Image src="/img/logo.png" alt="Logo" width={300} height={150} />
+        </Link>
+        <nav className="flex space-x-6 text-white">
+          {items.map((item) => (
+            <Link key={item.to} href={item.to}>
+                {item.label}
+            </Link>
+          ))}
+          {/* <ConnectButton /> */}
+        </nav>
+      </div>
+    </div>
+  )
+}
+
+export default Navbar
