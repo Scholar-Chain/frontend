@@ -113,7 +113,7 @@ export default function Home() {
                 alt={j.name}
                 className="w-32 object-cover"
               />
-              <div className="flex-1 p-4">
+              <div className="flex-2 p-4">
                 <h2 className="font-bold text-lg">
                   {j.name}
                 </h2>
@@ -143,13 +143,15 @@ export default function Home() {
                   </span>
                 </div> */}
               </div>
-              <button className="m-4 rounded bg-yellow-400 px-4 py-2 font-bold hover:opacity-90">
-                Submit
-              </button>
+              <div className="flex flex-row justify-end items-end">
+                <button className="m-4 rounded bg-yellow-400 px-4 py-2 font-bold hover:opacity-90">
+                  Submit
+                </button>
+              </div>
             </div>
           ))}
           {filtered.length === 0 && (
-            <p className="text-center text-gray-500">
+            <p className="text-center text-black">
               Tidak ada jurnal ditemukan.
             </p>
           )}
