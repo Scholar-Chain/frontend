@@ -24,7 +24,7 @@ export default function Home() {
   const [search, setSearch] = useState('')
   const [minPrice, setMinPrice] = useState<number | ''>('')
   const [maxPrice, setMaxPrice] = useState<number | ''>('')
-  const [sintaFilter, setSintaFilter] = useState<number[]>([])
+  // const [sintaFilter, setSintaFilter] = useState<number[]>([])
 
   // filter & search
   const filtered = useMemo(() => {
@@ -37,24 +37,24 @@ export default function Home() {
       }
       if (minPrice !== '' && j.price < minPrice) return false
       if (maxPrice !== '' && j.price > maxPrice) return false
-      if (
-        sintaFilter.length > 0 &&
-        !sintaFilter.includes(j.sintaLevel)
-      ) {
-        return false
-      }
+      // if (
+      //   sintaFilter.length > 0 &&
+      //   !sintaFilter.includes(j.sintaLevel)
+      // ) {
+      //   return false
+      // }
       return true
     })
-  }, [search, minPrice, maxPrice, sintaFilter])
+  }, [search, minPrice, maxPrice])
 
   // toggle sinta checkbox
-  const toggleSinta = (level: number) => {
-    setSintaFilter((prev) =>
-      prev.includes(level)
-        ? prev.filter((x) => x !== level)
-        : [...prev, level]
-    )
-  }
+  // const toggleSinta = (level: number) => {
+  //   setSintaFilter((prev) =>
+  //     prev.includes(level)
+  //       ? prev.filter((x) => x !== level)
+  //       : [...prev, level]
+  //   )
+  // }
 
   return (
     <div className="px-28 py-20">
@@ -102,7 +102,7 @@ export default function Home() {
       {/* Main content */}
       <div className="mt-8 flex gap-8">
         {/* List jurnal */}
-        <div className="flex-1 space-y-6">
+        <div className="flex-1 space-y-6 text-black">
           {filtered.map((j) => (
             <div
               key={j.id}
@@ -125,14 +125,14 @@ export default function Home() {
                   {j.scope}
                 </p>
                 <p className="mt-1 text-sm">
-                  <span className="font-semibold">Publish:</span>{' '}
-                  {j.publish}
+                  <span className="font-semibold">Publisher:</span>{' '}
+                  {j.publisher_name}
                 </p>
                 <p className="mt-1 text-sm">
                   <span className="font-semibold">Price:</span> Rp.{' '}
                   {j.price.toLocaleString()}
                 </p>
-                <div className="mt-3 flex items-center gap-2">
+                {/* <div className="mt-3 flex items-center gap-2">
                   <img
                     src="/icons/sinta-logo.png"
                     alt="Sinta"
@@ -141,7 +141,7 @@ export default function Home() {
                   <span className="bg-yellow-300 rounded-full px-2 text-xs">
                     {j.sintaLevel}
                   </span>
-                </div>
+                </div> */}
               </div>
               <button className="m-4 rounded bg-yellow-400 px-4 py-2 font-bold hover:opacity-90">
                 Submit
@@ -173,7 +173,7 @@ export default function Home() {
             </label>
           </div>
 
-          <div>
+          {/* <div>
             <h3 className="font-semibold mb-2">Sinta</h3>
             {[1, 2, 3, 4, 5, 6].map((lvl) => (
               <label
@@ -188,7 +188,7 @@ export default function Home() {
                 Sinta {lvl}
               </label>
             ))}
-          </div>
+          </div> */}
 
           <div>
             <h3 className="font-semibold mb-2">Price</h3>
