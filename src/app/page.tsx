@@ -1,11 +1,8 @@
-// src/app/page.tsx
 'use client'
 
 import { useState, useMemo } from 'react'
 import Link from 'next/link'
-import { ConnectButton } from '@xellar/kit'
 import { Journal } from '@/types'
-
 
 // contoh data statis
 const JOURNALS: Journal[] = [
@@ -17,44 +14,73 @@ const JOURNALS: Journal[] = [
     path: '/jurnal-ilmiah',
     thumbnail: '/img/journal/image.jpg',
     publisher_name: 'Publisher A',
-  }
+  },
+  {
+    id: '2',
+    name: 'Journal of Education, Humaniora',
+    price: 200000,
+    scope: 'Filsafat, Hukum, Sosial',
+    path: '/jurnal-sains',
+    thumbnail: '/img/journal/image2.jpg',
+    publisher_name: 'Publisher B',
+  },
 ]
 
 export default function Home() {
   const [search, setSearch] = useState('')
   const [minPrice, setMinPrice] = useState<number | ''>('')
   const [maxPrice, setMaxPrice] = useState<number | ''>('')
-  // const [sintaFilter, setSintaFilter] = useState<number[]>([])
+  const [scopeFilter, setScopeFilter] = useState<string[]>([])
+  const [publisherFilter, setPublisherFilter] = useState<string[]>([])
+
+  // daftar unik scope + publisher untuk checkbox
+  const allScopes = useMemo(
+    () => Array.from(new Set(JOURNALS.map((j) => j.scope))),
+    []
+  )
+  const allPublishers = useMemo(
+    () => Array.from(new Set(JOURNALS.map((j) => j.publisher_name))),
+    []
+  )
 
   // filter & search
   const filtered = useMemo(() => {
     return JOURNALS.filter((j) => {
+      // search di name, scope, publisher
       if (
         search &&
-        !j.name.toLowerCase().includes(search.toLowerCase())
+        ![j.name, j.scope, j.publisher_name]
+          .some((field) =>
+            field.toLowerCase().includes(search.toLowerCase())
+          )
       ) {
         return false
       }
+      // price
       if (minPrice !== '' && j.price < minPrice) return false
       if (maxPrice !== '' && j.price > maxPrice) return false
-      // if (
-      //   sintaFilter.length > 0 &&
-      //   !sintaFilter.includes(j.sintaLevel)
-      // ) {
-      //   return false
-      // }
+      // scope filter
+      if (scopeFilter.length > 0 && !scopeFilter.includes(j.scope))
+        return false
+      // publisher filter
+      if (
+        publisherFilter.length > 0 &&
+        !publisherFilter.includes(j.publisher_name)
+      )
+        return false
+
       return true
     })
-  }, [search, minPrice, maxPrice])
+  }, [search, minPrice, maxPrice, scopeFilter, publisherFilter])
 
-  // toggle sinta checkbox
-  // const toggleSinta = (level: number) => {
-  //   setSintaFilter((prev) =>
-  //     prev.includes(level)
-  //       ? prev.filter((x) => x !== level)
-  //       : [...prev, level]
-  //   )
-  // }
+  // toggle helper
+  const toggle = (arr: string[], setArr: (v: string[]) => void, v: string) => {
+    setArr(
+      arr.includes(v)
+        ? arr.filter((x) => x !== v)
+        : [...arr, v]
+    )
+  }
 
   return (
     <div className="px-28 py-20">
@@ -82,7 +108,7 @@ export default function Home() {
         Published to NFT
       </span>
 
-      {/* Search + Connect */}
+      {/* Search + Clear */}
       <div className="mt-12 flex items-center gap-4">
         <input
           type="text"
@@ -114,15 +140,10 @@ export default function Home() {
                 className="w-32 object-cover"
               />
               <div className="flex-2 p-4">
-                <h2 className="font-bold text-lg">
-                  {j.name}
-                </h2>
-                <p className="text-sm text-gray-600">
-                  {j.scope}
-                </p>
+                <h2 className="font-bold text-lg">{j.name}</h2>
+                <p className="text-sm text-gray-600">{j.scope}</p>
                 <p className="mt-2 text-sm">
-                  <span className="font-semibold">Scope:</span>{' '}
-                  {j.scope}
+                  <span className="font-semibold">Scope:</span> {j.scope}
                 </p>
                 <p className="mt-1 text-sm">
                   <span className="font-semibold">Publisher:</span>{' '}
@@ -132,16 +153,6 @@ export default function Home() {
                   <span className="font-semibold">Price:</span> Rp.{' '}
                   {j.price.toLocaleString()}
                 </p>
-                {/* <div className="mt-3 flex items-center gap-2">
-                  <img
-                    src="/icons/sinta-logo.png"
-                    alt="Sinta"
-                    className="w-6"
-                  />
-                  <span className="bg-yellow-300 rounded-full px-2 text-xs">
-                    {j.sintaLevel}
-                  </span>
-                </div> */}
               </div>
               <div className="flex flex-row justify-end items-end">
                 <button className="m-4 rounded bg-yellow-400 px-4 py-2 font-bold hover:opacity-90">
@@ -158,7 +169,8 @@ export default function Home() {
         </div>
 
         {/* Sidebar filter */}
-        <aside className="w-64 space-y-6">
+        <aside className="w-64 space-y-6 text-black">
+          {/* Sorting */}
           <div>
             <h3 className="font-semibold mb-2">Sorting</h3>
             <label className="flex items-center gap-2">
@@ -175,23 +187,45 @@ export default function Home() {
             </label>
           </div>
 
-          {/* <div>
-            <h3 className="font-semibold mb-2">Sinta</h3>
-            {[1, 2, 3, 4, 5, 6].map((lvl) => (
+          {/* Filter Scope */}
+          <div>
+            <h3 className="font-semibold mb-2">Scope</h3>
+            {allScopes.map((sc) => (
               <label
-                key={lvl}
+                key={sc}
                 className="flex items-center gap-2 text-sm"
               >
                 <input
                   type="checkbox"
-                  checked={sintaFilter.includes(lvl)}
-                  onChange={() => toggleSinta(lvl)}
+                  checked={scopeFilter.includes(sc)}
+                  onChange={() => toggle(scopeFilter, setScopeFilter, sc)}
                 />
-                Sinta {lvl}
+                {sc}
               </label>
             ))}
-          </div> */}
+          </div>
 
+          {/* Filter Publisher */}
+          <div>
+            <h3 className="font-semibold mb-2">Publisher</h3>
+            {allPublishers.map((pub) => (
+              <label
+                key={pub}
+                className="flex items-center gap-2 text-sm"
+              >
+                <input
+                  type="checkbox"
+                  checked={publisherFilter.includes(pub)}
+                  onChange={() =>
+                    toggle(publisherFilter, setPublisherFilter, pub)
+                  }
+                />
+                {pub}
+              </label>
+            ))}
+          </div>
+
+          {/* Filter Price */}
           <div>
             <h3 className="font-semibold mb-2">Price</h3>
             <div className="flex gap-2">
