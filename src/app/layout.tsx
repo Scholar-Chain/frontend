@@ -23,7 +23,9 @@ export default function RootLayout({
         <Suspense fallback={<div className="flex justify-center items-center h-screen">Loading...</div>}>
           <Web3Provider>
             <Navbar />
-            {children}
+            <main className="min-h-screen w-full bg-primary-gradient flex flex-col justify-center items-center text-white px-28 gap-18">
+              {children}
+            </main>
           </Web3Provider>
         </Suspense>
       </body>
