@@ -169,7 +169,7 @@ export default function Home() {
         </div>
 
         {/* Sidebar filter */}
-        <aside className="w-64 space-y-6 text-black">
+        <aside className="w-64 space-y-6 text-white">
           {/* Sorting */}
           <div>
             <h3 className="font-semibold mb-2">Sorting</h3>
