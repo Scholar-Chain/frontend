@@ -4,6 +4,7 @@ import type { FC } from 'react'
 import Link from 'next/link'
 import { NavItem } from '@/types'
 import Image from 'next/image';
+import { ConnectButton } from '@xellar/kit';
 const items: NavItem[] = [
   { label: 'Publisher', to: '/publisher' },
   { label: 'Partnership', to: '/partnership' },
@@ -36,7 +37,7 @@ const Navbar: FC = () => {
                 {item.label}
             </Link>
           ))}
-          {/* <ConnectButton /> */}
+          <ConnectButton />
         </nav>
       </div>
     </div>
