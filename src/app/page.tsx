@@ -15,7 +15,7 @@ export default function Home() {
   // const [minPrice, setMinPrice] = useState<number | ''>('')
   // const [maxPrice, setMaxPrice] = useState<number | ''>('')
   const [scopeFilter, setScopeFilter] = useState<string[]>([])
-  const [publisherFilter, setPublisherFilter] = useState<string[]>([])
+  // const [publisherFilter, setPublisherFilter] = useState<string[]>([])
   const [sortBy, setSortBy] = useState<'default' | 'priceAsc' | 'priceDesc'>('default')
   const [accessToken, setAccessToken] = useState<string | null>(null)
 
@@ -116,7 +116,7 @@ export default function Home() {
       items = items.sort((a, b) => a.name.localeCompare(b.name))
     }
     return items
-  }, [journals, search, scopeFilter, publisherFilter, sortBy])
+  }, [journals, search, scopeFilter, sortBy])
 
   return (
     <div className="px-28 py-20">
