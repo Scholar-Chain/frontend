@@ -66,10 +66,10 @@ export default function Home() {
     return Array.from(new Set(journals.flatMap(j => j.scope)))
   }, [journals])
   
-  const allPublishers = useMemo(
-    () => Array.from(new Set(journals.map((j) => j.publisher_name))),
-    [journals]
-  )
+  // const allPublishers = useMemo(
+  //   () => Array.from(new Set(journals.map((j) => j.publisher_name))),
+  //   [journals]
+  // )
 
   // helper untuk toggle checkbox
   const toggle = (
