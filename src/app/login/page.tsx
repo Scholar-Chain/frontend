@@ -31,17 +31,55 @@ export default function LoginPage() {
   })
 
   const onSubmit = async (data: LoginData) => {
-    const res = await fetch('/api/login', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(data),
-    })
-    const result = await res.json()
-    if (!res.ok) {
-      alert(result.message || 'Login gagal')
-      return
+    try {
+      const res = await fetch(
+        `${process.env.NEXT_PUBLIC_BASE_API_URL}/api/auth/login`,
+        {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(data),
+        }
+      )
+      const result = await res.json()
+
+      if (!res.ok) {
+        // misalnya { message: '...' }
+        alert(result.message || 'Login gagal')
+        return
+      }
+      const { access_token } = result
+      console.log(access_token)
+      if (!access_token) {
+        alert('Token tidak diterima')
+        return
+      }
+
+      // simpan token di sessionStorage
+      sessionStorage.setItem('access_token', access_token)
+      // hit /api/auth/me and save to session storage
+      const meRes = await fetch(
+        `${process.env.NEXT_PUBLIC_BASE_API_URL}/api/auth/me`,
+        {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${access_token}`,
+          },
+        }
+      )
+      const meResult = await meRes.json()
+      if (!meRes.ok) {
+        alert(meResult.message || 'Gagal mendapatkan data user')
+        return
+      }
+      // save result to session storage
+      sessionStorage.setItem('user', JSON.stringify(meResult))
+      
+      router.push('/')
+    } catch (err) {
+      console.error(err)
+      alert('Terjadi kesalahan jaringan')
     }
-    router.push('/')
   }
 
   return (

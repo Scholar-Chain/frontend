@@ -1,10 +1,12 @@
-"use client";
-import { useState, useEffect } from 'react'
-import type { FC } from 'react'
+'use client'
+
+import { useState, useEffect, FC } from 'react'
 import Link from 'next/link'
 import { NavItem } from '@/types'
-import Image from 'next/image';
-import { ConnectButton } from '@xellar/kit';
+import Image from 'next/image'
+// import { ConnectButton } from '@xellar/kit'
+import AuthConnectButton from '@/components/AuthConnectButton'
+
 const items: NavItem[] = [
   { label: 'Publisher', to: '/publisher' },
   { label: 'Partnership', to: '/partnership' },
@@ -12,6 +14,7 @@ const items: NavItem[] = [
 
 const Navbar: FC = () => {
   const [hasBg, setHasBg] = useState(false)
+  const [isAuth, setIsAuth] = useState(false)
 
   useEffect(() => {
     const handleScroll = () => {
@@ -19,6 +22,12 @@ const Navbar: FC = () => {
     }
     window.addEventListener('scroll', handleScroll)
     return () => window.removeEventListener('scroll', handleScroll)
+  }, [])
+
+  useEffect(() => {
+    const token = sessionStorage.getItem('access_token')
+    const user = sessionStorage.getItem('user')
+    setIsAuth(!!token && !!user)
   }, [])
 
   return (
@@ -31,13 +40,19 @@ const Navbar: FC = () => {
         <Link href="/">
           <Image src="/img/logo.png" alt="Logo" width={300} height={150} />
         </Link>
-        <nav className="flex space-x-6 text-white">
+        <nav className="flex space-x-6 items-center">
           {items.map((item) => (
-            <Link key={item.to} href={item.to}>
-                {item.label}
+            <Link
+              key={item.to}
+              href={item.to}
+              className="text-white/70 hover:text-white"
+            >
+              {item.label}
             </Link>
           ))}
-          <ConnectButton />
+          {isAuth && (
+            <AuthConnectButton />
+          ) }
         </nav>
       </div>
     </div>
