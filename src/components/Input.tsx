@@ -1,5 +1,5 @@
 // src/components/Input.tsx
-import { InputHTMLAttributes, ReactNode } from 'react'
+import { InputHTMLAttributes } from 'react'
 
 interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
   /** Pesan error, kalau ada akan ditampilkan di bawah input */
