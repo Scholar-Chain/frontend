@@ -56,39 +56,40 @@ export default function SubmitPage() {
   const articleIdHash = keccak256(toBytes(String(userData?.author?.id) + userData?.author?.email + journal.id))
 
   // 3. Prepare write config (Sepolia chainId 11155111)
-  const result = useSimulateContract({
-    address: CONTRACT_ADDRESS,
-    abi: CONTRACT_ABI,
-    functionName: 'createSubmission',
-    args: [articleIdHash],
-    chainId: liskSepolia.id,
-  })
+  // const result = useSimulateContract({
+  //   address: CONTRACT_ADDRESS,
+  //   abi: CONTRACT_ABI,
+  //   functionName: 'createSubmission',
+  //   args: [articleIdHash],
+  //   chainId: liskSepolia.id,
+  // })
 
   // 4. Execute tx
-  const { write, isLoading: isTxLoading, data: txData } =
-    useContractWrite(config)
+  // const { write, isLoading: isTxLoading, data: txData } =
+  //   useContractWrite(config)
 
   // 5. Wait for confirmation
-  const { isSuccess } = useWaitForTransaction({ hash: txData?.hash })
+  // const { isSuccess } = useWaitForTransaction({ hash: txData?.hash })
 
-  useEffect(() => {
-    if (isSuccess) {
-      alert('On-chain submission berhasil!')
-      router.push('/') // atau halaman lain
-    }
-  }, [isSuccess, router])
+  // useEffect(() => {
+  //   if (isSuccess) {
+  //     alert('On-chain submission berhasil!')
+  //     router.push('/') // atau halaman lain
+  //   }
+  // }, [isSuccess, router])
 
   return (
-    <div className="p-8 max-w-3xl mx-auto flex gap-8">
-      {/* … tampilkan detail jurnal seperti sebelum … */}
+    // <div className="p-8 max-w-3xl mx-auto flex gap-8">
+    //   {/* … tampilkan detail jurnal seperti sebelum … */}
 
-      <button
-        onClick={() => write?.()}
-        disabled={!write || isTxLoading}
-        className="mt-6 rounded bg-blue-600 px-6 py-3 text-white font-bold hover:opacity-90 disabled:opacity-50"
-      >
-        {isTxLoading ? 'Submitting…' : 'Submit On-Chain'}
-      </button>
-    </div>
+    //   <button
+    //     onClick={() => write?.()}
+    //     disabled={!write || isTxLoading}
+    //     className="mt-6 rounded bg-blue-600 px-6 py-3 text-white font-bold hover:opacity-90 disabled:opacity-50"
+    //   >
+    //     {isTxLoading ? 'Submitting…' : 'Submit On-Chain'}
+    //   </button>
+    // </div>
+    <></>
   )
 }
