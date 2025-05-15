@@ -121,8 +121,8 @@ export default function Home() {
   return (
     <div className="px-28 py-20">
       <h1 className="text-5xl font-bold text-center">
-        "Knowledge is power — but ownership is protection. Secure your
-        authorship with immutable proof."
+        &quot;Knowledge is power — but ownership is protection. Secure your
+        authorship with immutable proof.&quot;
       </h1>
 
       {
