@@ -10,7 +10,7 @@ export default function AuthConnectButton() {
   const { disconnect } = useDisconnect()
 
   useEffect(() => {
-    if (!isConnected || !address) return
+    if (isConnected || !address) return
 
     // Ambil user & token dari sessionStorage
     const accessToken = sessionStorage.getItem('access_token')
