@@ -12,8 +12,8 @@ export default function Home() {
 
   // filter state
   const [search, setSearch] = useState('')
-  const [minPrice, setMinPrice] = useState<number | ''>('')
-  const [maxPrice, setMaxPrice] = useState<number | ''>('')
+  // const [minPrice, setMinPrice] = useState<number | ''>('')
+  // const [maxPrice, setMaxPrice] = useState<number | ''>('')
   const [scopeFilter, setScopeFilter] = useState<string[]>([])
   const [publisherFilter, setPublisherFilter] = useState<string[]>([])
   const [sortBy, setSortBy] = useState<'default' | 'priceAsc' | 'priceDesc'>('default')
@@ -95,14 +95,14 @@ export default function Home() {
         if (!hasAny) return false
       }
       // price range
-      if (minPrice !== '' && j.price < minPrice) return false
-      if (maxPrice !== '' && j.price > maxPrice) return false
-      if (
-        publisherFilter.length > 0 &&
-        !publisherFilter.includes(j.publisher_name)
-      )
+      // if (minPrice !== '' && j.price < minPrice) return false
+      // if (maxPrice !== '' && j.price > maxPrice) return false
+      // if (
+      //   publisherFilter.length > 0 &&
+      //   !publisherFilter.includes(j.publisher_name)
+      // )
       
-        return false
+      //   return false
       return true
     });
     // sort
@@ -116,7 +116,7 @@ export default function Home() {
       items = items.sort((a, b) => a.name.localeCompare(b.name))
     }
     return items
-  }, [journals, search, minPrice, maxPrice, scopeFilter, publisherFilter, sortBy])
+  }, [journals, search, scopeFilter, publisherFilter, sortBy])
 
   return (
     <div className="px-28 py-20">
