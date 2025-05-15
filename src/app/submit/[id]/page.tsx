@@ -2,18 +2,18 @@
 
 import React, { useEffect, useState } from 'react'
 import { useRouter, useParams } from 'next/navigation'
-import {
-  useSimulateContract,
-  useWriteContract,
-  useWaitForTransactionReceipt 
-} from 'wagmi'
+// import {
+//   useSimulateContract,
+//   useWriteContract,
+//   useWaitForTransactionReceipt 
+// } from 'wagmi'
 import abi from '@/abi/ScholarChain.json'
 
 import { keccak256, toBytes } from 'viem'         // ← pakai Viem
 import { JournalDetail } from '@/types/journal'
-import { liskSepolia } from "wagmi/chains";
-const CONTRACT_ADDRESS = '0X'+process.env.NEXT_PUBLIC_CONTRACT_ADDRESS
-const CONTRACT_ABI = abi;
+// import { liskSepolia } from "wagmi/chains";
+// const CONTRACT_ADDRESS = '0X'+process.env.NEXT_PUBLIC_CONTRACT_ADDRESS
+// const CONTRACT_ABI = abi;
 
 export default function SubmitPage() {
   const router = useRouter()
