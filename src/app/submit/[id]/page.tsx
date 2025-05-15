@@ -7,7 +7,7 @@ import { useRouter, useParams } from 'next/navigation'
 //   useWriteContract,
 //   useWaitForTransactionReceipt 
 // } from 'wagmi'
-import abi from '@/abi/ScholarChain.json'
+// import abi from '@/abi/ScholarChain.json'
 
 import { keccak256, toBytes } from 'viem'         // ← pakai Viem
 import { JournalDetail } from '@/types/journal'
@@ -53,7 +53,7 @@ export default function SubmitPage() {
   if (!journal) return <p className="p-8 text-center">Jurnal tidak ditemukan.</p>
 
   // 2. Generate keccak256 hash via Viem
-  const articleIdHash = keccak256(toBytes(String(userData?.author?.id) + userData?.author?.email + journal.id))
+  // const articleIdHash = keccak256(toBytes(String(userData?.author?.id) + userData?.author?.email + journal.id))
 
   // 3. Prepare write config (Sepolia chainId 11155111)
   // const result = useSimulateContract({
