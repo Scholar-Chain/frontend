@@ -9,7 +9,7 @@ import { useRouter, useParams } from 'next/navigation'
 // } from 'wagmi'
 // import abi from '@/abi/ScholarChain.json'
 
-import { keccak256, toBytes } from 'viem'         // ← pakai Viem
+// import { keccak256, toBytes } from 'viem'         // ← pakai Viem
 import { JournalDetail } from '@/types/journal'
 // import { liskSepolia } from "wagmi/chains";
 // const CONTRACT_ADDRESS = '0X'+process.env.NEXT_PUBLIC_CONTRACT_ADDRESS
@@ -22,7 +22,7 @@ export default function SubmitPage() {
   const [journal, setJournal] = useState<JournalDetail | null>(null)
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
-  const [userData, setUserData] = useState<any>(null)
+  // const [userData, setUserData] = useState<any>(null)
   // 1. Load journal detail…
   useEffect(() => {
     const token = sessionStorage.getItem('access_token')
@@ -41,11 +41,11 @@ export default function SubmitPage() {
       .finally(() => setLoading(false))
 
       // get user data
-      const userJson = sessionStorage.getItem('user')
-      if (userJson) {
-        const user = JSON.parse(userJson)
-        setUserData(user)
-      }
+      // const userJson = sessionStorage.getItem('user')
+      // if (userJson) {
+      //   const user = JSON.parse(userJson)
+      //   setUserData(user)
+      // }
   }, [id, router, setLoading, setError])
 
   if (loading) return <p className="p-8 text-center">Loading...</p>
