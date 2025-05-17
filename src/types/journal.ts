@@ -10,6 +10,7 @@ export interface Journal {
     path: string
     thumbnail_url: string
     publisher_name: string
+    publish_months?: string[]
 }
 
 

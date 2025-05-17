@@ -10,6 +10,8 @@ export default function AuthConnectButton() {
   const { disconnect } = useDisconnect()
 
   useEffect(() => {
+    // jika halaman belum ready
+    if (typeof window === 'undefined') return
     if (isConnected || address) return
 
     // Ambil user & token dari sessionStorage
@@ -17,17 +19,21 @@ export default function AuthConnectButton() {
     const userJson = sessionStorage.getItem('user')
     if (!accessToken || !userJson) return
 
-    const { name, email, username, author } = JSON.parse(userJson)
+    const { name, email, username } = JSON.parse(userJson)
 
     // Jika user sudah punya wallet_address dan itu beda dengan yang terconnect,
     // maka langsung disconnect
-    if (author.wallet_address && address !== author.wallet_address) {
-      disconnect()
-      alert(
-        'Wallet address already registered. Please use the registered wallet address.'
-      );
-      return
-    }
+    // settimeout
+    // untuk menunggu wallet connect selesai
+    // setTimeout(() => {
+    //   if (author.wallet_address && address !== author.wallet_address) {
+    //     disconnect()
+    //     alert(
+    //       'Wallet address already registered. Please use the registered wallet address.'
+    //     );
+    //     return
+    //   }
+    // }, 1000)
 
     // Kalau belum pernah set atau sama, lanjut update profile
     fetch(`${process.env.NEXT_PUBLIC_BASE_API_URL}/api/auth/profile`, {
@@ -56,5 +62,27 @@ export default function AuthConnectButton() {
       .catch((err) => console.error(err))
   }, [isConnected, address, disconnect])
 
-  return <ConnectButton />
+  return <ConnectButton.Custom>
+    {({ account, disconnect, openConnectModal }) => {
+      return (
+        <div className='mt-3'>
+          {isConnected ? (
+            <button
+              onClick={disconnect}
+              className="bg-blue-500 text-white px-4 py-2 rounded"
+            >
+              {account?.address}
+            </button>
+          ) : (
+            <button
+              onClick={openConnectModal}
+              className="bg-blue-500 text-white px-4 py-2 rounded"
+            >
+              Connect Wallet
+            </button>
+          )}
+        </div>
+      )
+    }}
+  </ConnectButton.Custom>
 }

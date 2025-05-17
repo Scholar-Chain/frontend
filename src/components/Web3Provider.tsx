@@ -5,8 +5,8 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { XellarKitProvider, defaultConfig, darkTheme } from "@xellar/kit";
 import { liskSepolia } from "wagmi/chains";
  
-const config = defaultConfig({
-  appName: "Xellar",
+export const config = defaultConfig({
+  appName: "Scholar Chain",
   // Required for WalletConnect
   walletConnectProjectId: process.env.NEXT_PUBLIC_WALLET_CONNECT_PROJECT_ID || "",
  
