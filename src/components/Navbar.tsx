@@ -8,8 +8,8 @@ import Image from 'next/image'
 import AuthConnectButton from '@/components/AuthConnectButton'
 
 const items: NavItem[] = [
-  { label: 'Publisher', to: '/publisher' },
-  { label: 'Partnership', to: '/partnership' },
+  { label: 'Your Submission', to: '/submissions' },
+  { label: 'Home', to: '/' },
 ]
 
 const Navbar: FC = () => {
